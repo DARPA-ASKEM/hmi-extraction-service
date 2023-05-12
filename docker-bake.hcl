@@ -43,7 +43,7 @@ target "_platforms" {
 
 
 target "hmi-extraction-service-base" {
-	context = "/docker"
+	context = "docker"
 	dockerfile = "Dockerfile"
 	tags = tag("hmi-extraction-service", "", "")
 }
