@@ -28,11 +28,11 @@ function "check_suffix" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 group "prod" {
-  targets = ["NAME-service"]
+  targets = ["hmi-extraction-service"]
 }
 
 group "default" {
-  targets = ["NAME-service-base"]
+  targets = ["hmi-extraction-service-base"]
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -41,12 +41,13 @@ target "_platforms" {
   platforms = ["linux/amd64", "linux/arm64"]
 }
 
-target "NAME-service-base" {
-  context = "."
-  tags = tag("NAME-service", "", "")
-  dockerfile = "Dockerfile"
+
+target "hmi-extraction-service-base" {
+	context = "/docker"
+	dockerfile = "Dockerfile"
+	tags = tag("hmi-extraction-service", "", "")
 }
 
-target "NAME-service" {
-  inherits = ["_platforms", "NAME-service-base"]
+target "hmi-extraction-service" {
+  inherits = ["_platforms", "hmi-extraction-service-base"]
 }
