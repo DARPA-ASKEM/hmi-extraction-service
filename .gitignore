@@ -76,6 +76,7 @@ create.sql
 __pycache__/
 response.txt
 response.zip
-supervisord*.*
+supervisord*.log
+supervisord*.pid
 output
 uploads
