@@ -16,7 +16,14 @@ OUTPUT_FOLDER = "output"
 ALLOWED_EXTENSIONS = {"pdf"}
 
 app = Flask(__name__)
-app.config["broker_url"] = os.getenv("IP_ADDRESS", "amqp://terarium:terarium123@host.docker.internal:5672//")
+ip = os.getenv("IP_ADDRESS", "host.docker.internal")
+login = os.getenv("RABBITMQ_DEFAULT_USER", "terarium")
+pwd = os.getenv("RABBITMQ_DEFAULT_PASS", "terarium123")
+port = os.getenv("MESSAGE_QUEUE_PORT_5672_TCP_PORT", "5672")
+
+URL = "amqp://" + login + ":" + pwd + "@" + ip + ":" + port + "//"
+
+app.config["broker_url"] = URL
 app.config["result_backend"] = "rpc://"
 
 celery = Celery(app.name, broker=app.config["broker_url"])
@@ -79,8 +86,10 @@ def convert_pdf_task():
     if "file" not in request.files:
         return jsonify(error="No file part in the request"), 400
 
-    extraction_method = request.form.get("extraction_method", "pydf2")
-    extract_images = request.form.get("extract_images", False)
+    # extraction_method = request.form.get("extraction_method", "pydf2")
+    # extract_images = request.form.get("extract_images", False)
+    extraction_method = request.args.get("extraction_method")
+    extract_images = request.args.get("extract_images")
     logging.info("Extracting using:")
     logging.info(extraction_method)
     logging.info(extract_images)
