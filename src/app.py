@@ -16,7 +16,7 @@ OUTPUT_FOLDER = "output"
 ALLOWED_EXTENSIONS = {"pdf"}
 
 app = Flask(__name__)
-ip = os.getenv("IP_ADDRESS", "host.docker.internal")
+ip = os.getenv("MESSAGE_QUEUE_PORT_15671_TCP_ADDR", "host.docker.internal")
 login = os.getenv("RABBITMQ_DEFAULT_USER", "terarium")
 pwd = os.getenv("RABBITMQ_DEFAULT_PASS", "terarium123")
 port = os.getenv("MESSAGE_QUEUE_PORT_5672_TCP_PORT", "5672")
@@ -171,7 +171,7 @@ def extract_text_and_images_task(self, file_path, extraction_method, extract_ima
             text_chunk.decode("utf-8").strip() for text_chunk in extracted_text_list
         ]
         extracted_text = " ".join(extracted_text_list).replace("\n", "")
-        if extract_images:
+        if extract_images == "true":
             extracted_images = extract_images_base64(file_path)
         else:
             extracted_images = []
