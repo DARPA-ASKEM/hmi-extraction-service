@@ -16,7 +16,7 @@ OUTPUT_FOLDER = "output"
 ALLOWED_EXTENSIONS = {"pdf"}
 
 app = Flask(__name__)
-ip = os.getenv("MESSAGE_QUEUE_PORT_15671_TCP_ADDR", "host.docker.internal")
+ip = os.getenv("IP_ADDRESS", "message-queue.staging.terarium.ai")
 login = os.getenv("RABBITMQ_DEFAULT_USER", "terarium")
 pwd = os.getenv("RABBITMQ_DEFAULT_PASS", "terarium123")
 port = os.getenv("MESSAGE_QUEUE_PORT_5672_TCP_PORT", "5672")
